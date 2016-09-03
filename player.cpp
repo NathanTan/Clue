@@ -105,8 +105,11 @@ int player::roll_dice(){
 
 //TODO: make sure incoming user chioce is valid and not an char
 bool player::execute_turn(game_state gs, int user_choice, bool* dice_rolled, int* dice_roll, bool * player_moved ){
+
+   cout << "Executing turn" << endl;
    switch(user_choice){
       case 1: 
+	 cout << "case 1" << endl;
 	 if(*dice_rolled == false){
 	    cout << "Rolling dice" << endl;
 	    *dice_roll = roll_dice();
@@ -118,14 +121,17 @@ bool player::execute_turn(game_state gs, int user_choice, bool* dice_rolled, int
 	 }
 	 return false;
       case 2:
-	 if(!player_moved){
+
+	 cout << "case 2" << endl;
+
+	 if(!(*player_moved)){
 	    cout << "Moving character" << endl;
 	    move_character(*dice_roll, *dice_rolled, gs);
 	 
 	    *player_moved = true;
 	 }
 	 return false;
-      case 3:
+	 case 3:
 	 cout << "Guessing confidential" << endl;
 	 return true;
       default: 
@@ -188,150 +194,148 @@ void player::print_available_rooms(int roll, game_state gs){
 
 
 
-   //TODO
-   if(current_room == "study"){
-      if(gs.getStudy().access.adjacent1.distance <= roll){
+   //If the roll is less not high enough, cut straight to the else
+   //unless they can use a secert passage
+   if(current_room == "study" && roll >= 4){
+      if(gs.getStudy().access.adjacent1.distance <= roll){//4
 	 cout << " - Hall" << endl;
       }
-      if(gs.getStudy().access.adjacent2.distance <= roll)
+      if(gs.getStudy().access.adjacent2.distance <= roll)//7
 	 cout << " - Library" << endl;
    }
-   else if(current_room == "hall")
+   else if(current_room == "hall" && roll >= 4)
    {
-      if(gs.getHall().access.adjacent1.distance <= roll)
+      if(gs.getHall().access.adjacent1.distance <= roll)//4
 	 cout << " - Study" << endl;
-      if(gs.getHall().access.adjacent2.distance <= roll)
+      if(gs.getHall().access.adjacent2.distance <= roll)//8
 	 cout << " - Lounge" << endl;
-      if(gs.getHall().access.corner1.distance <= roll)
+      if(gs.getHall().access.corner1.distance <= roll)//7
 	 cout << " - Library" << endl;
-      if(gs.getHall().access.corner2.distance <= roll)
+      if(gs.getHall().access.corner2.distance <= roll)//8
 	 cout << " - Dining Room" << endl;
    }
-   else if(current_room == "lounge")
+   else if(current_room == "lounge") //will always have the option of secert_passage
    {
-
-      if(gs.getLounge().access.adjacent1.distance <= roll)
+      if(gs.getLounge().access.adjacent1.distance <= roll)//8
 	 cout << " - Hall" << endl;
-      if(gs.getLounge().access.adjacent2.distance <= roll)
+      if(gs.getLounge().access.adjacent2.distance <= roll)//4
 	 cout << " - Dining Room" << endl;
-      if(gs.getLounge().access.secret_passage.distance <= roll) // should always be true
-	 cout << " - Conservatory" << endl;
+      cout << " - Conservatory" << endl;//secret_passage
    }
-   else if(current_room == "dining_room")
+   else if(current_room == "dining_room" && roll >= 4)
    {
-      if(gs.getDining_room().access.adjacent1.distance <= roll)
+      if(gs.getDining_room().access.adjacent1.distance <= roll)//4
 	 cout << " - Lounge" << endl;
-      if(gs.getDining_room().access.adjacent2.distance <= roll)
+      if(gs.getDining_room().access.adjacent2.distance <= roll)//11
 	 cout << " - Kitchen" << endl;
-      if(gs.getDining_room().access.corner1.distance <= roll)
+      if(gs.getDining_room().access.corner1.distance <= roll)//8
 	 cout << " - Hall" << endl;
-      if(gs.getDining_room().access.corner2.distance <= roll)
+      if(gs.getDining_room().access.corner2.distance <= roll)//7
 	 cout << " - Ballroom" << endl;
    }
-   else if(current_room == "kitchen")
+   else if(current_room == "kitchen") //will always have the option of secert_passage
    {
-      if(gs.getKitchen().access.adjacent1.distance <= roll)
+      if(gs.getKitchen().access.adjacent1.distance <= roll)//11
 	 cout << " - Dining Room" << endl;
-      if(gs.getKitchen().access.adjacent2.distance <= roll)
+      if(gs.getKitchen().access.adjacent2.distance <= roll)//7
 	 cout << " - Kitchen" << endl;
-      if(gs.getKitchen().access.secret_passage.distance <= roll) // should always be true
-	 cout << " - Study" << endl;
+	 
+      cout << " - Study" << endl;//seceret_pasage
    }
-   else if(current_room == "ballroom")
+   else if(current_room == "ballroom" && roll <= 4)
    {
-      if(gs.getBallroom().access.adjacent1.distance <= roll)
+      if(gs.getBallroom().access.adjacent1.distance <= roll)//7
 	 cout << " - Kitchen" << endl;
-      if(gs.getBallroom().access.adjacent2.distance <= roll)
+      if(gs.getBallroom().access.adjacent2.distance <= roll)//4
 	 cout << " - Conservatory" << endl;
-      if(gs.getBallroom().access.corner1.distance <= roll)
+      if(gs.getBallroom().access.corner1.distance <= roll)//7
 	 cout << " - Dining Room" << endl;
-      if(gs.getBallroom().access.corner2.distance <= roll)
+      if(gs.getBallroom().access.corner2.distance <= roll)//6
 	 cout << " - Billiard Room" << endl;
    }
-   else if(current_room == "conservatory")
+   else if(current_room == "conservatory") //will always have the option of secert_passage
    {
-      if(gs.getConservatory().access.adjacent1.distance <= roll)
+      if(gs.getConservatory().access.adjacent1.distance <= roll)//4
 	 cout << " - Ballroom" << endl;
-      if(gs.getConservatory().access.adjacent2.distance <= roll)
+      if(gs.getConservatory().access.adjacent2.distance <= roll)//7
 	 cout << " - Billiard Room" << endl;
-      if(gs.getConservatory().access.secret_passage.distance <= roll) // should always be true
-	 cout << " - Lounge" << endl;
+	 cout << " - Lounge" << endl;//seceret_passage
    }
-   else if(current_room == "billiard_room")
+   else if(current_room == "billiard_room" && roll >= 4)
    {
-      if(gs.getBilliard_room().access.adjacent1.distance <= roll)
+      if(gs.getBilliard_room().access.adjacent1.distance <= roll)//7
 	 cout << " - Conservatory" << endl;
-      if(gs.getBilliard_room().access.adjacent2.distance <= roll)
+      if(gs.getBilliard_room().access.adjacent2.distance <= roll)//4
 	 cout << " - Library" << endl;
-      if(gs.getBilliard_room().access.corner1.distance <= roll)
+      if(gs.getBilliard_room().access.corner1.distance <= roll)//6
 	 cout << " - Ballroom" << endl;
    }
-   else if(current_room == "library")
+   else if(current_room == "library" && roll >= 4)
    {
-      if(gs.getLibrary().access.adjacent1.distance <= roll)
+      if(gs.getLibrary().access.adjacent1.distance <= roll)//4
 	 cout << " - Billiard Room" << endl;
-      if(gs.getLibrary().access.adjacent2.distance <= roll)
+      if(gs.getLibrary().access.adjacent2.distance <= roll)//7
 	 cout << " - Study" << endl;
-      if(gs.getLibrary().access.corner1.distance <= roll)
+      if(gs.getLibrary().access.corner1.distance <= roll)//7
 	 cout << " - Hall" << endl;
    }
-   else if(current_room == "scarlet_start")
+   else if(current_room == "scarlet_start" && roll >= 8)
    {
-      if(gs.getScarlet_start().access.adjacent1.distance <= roll)
+      if(gs.getScarlet_start().access.adjacent1.distance <= roll)//8
 	 cout << " - Lounge" << endl;
-      if(gs.getScarlet_start().access.adjacent2.distance <= roll)
+      if(gs.getScarlet_start().access.adjacent2.distance <= roll)//12
 	 cout << " - Hall" << endl;
-      if(gs.getScarlet_start().access.corner1.distance <= roll)
+      if(gs.getScarlet_start().access.corner1.distance <= roll)//10
 	 cout << " - Dining Room" << endl;
    }
 
-   else if(current_room == "mustard_start")
+   else if(current_room == "mustard_start" && roll >= 8)
    {
-      if(gs.getMustard_start().access.adjacent1.distance <= roll)
+      if(gs.getMustard_start().access.adjacent1.distance <= roll)//8
 	 cout << " - Lounge" << endl;
-      if(gs.getMustard_start().access.adjacent2.distance <= roll)
+      if(gs.getMustard_start().access.adjacent2.distance <= roll)//8
 	 cout << " - Hall" << endl;
-      if(gs.getMustard_start().access.corner1.distance <= roll)
+      if(gs.getMustard_start().access.corner1.distance <= roll)//12
 	 cout << " - Dining Room" << endl;
    }
 
-   else if(current_room == "green_start")
+   else if(current_room == "green_start" && roll >= 8)
    {
-      if(gs.getGreen_start().access.adjacent1.distance <= roll)
+      if(gs.getGreen_start().access.adjacent1.distance <= roll)//8
 	 cout << " - Lounge" << endl;
-      if(gs.getGreen_start().access.adjacent2.distance <= roll)
+      if(gs.getGreen_start().access.adjacent2.distance <= roll)//10
 	 cout << " - Hall" << endl;
-      if(gs.getGreen_start().access.corner1.distance <= roll)
+      if(gs.getGreen_start().access.corner1.distance <= roll)//13
 	 cout << " - Dining Room" << endl;
    }
 
-   else if(current_room == "white_start")
+   else if(current_room == "white_start" && roll >= 8)
    {
-      if(gs.getWhite_start().access.adjacent1.distance <= roll)
+      if(gs.getWhite_start().access.adjacent1.distance <= roll)//8
 	 cout << " - Lounge" << endl;
-      if(gs.getWhite_start().access.adjacent2.distance <= roll)
+      if(gs.getWhite_start().access.adjacent2.distance <= roll)//13
 	 cout << " - Hall" << endl;
-      if(gs.getWhite_start().access.corner1.distance <= roll)
+      if(gs.getWhite_start().access.corner1.distance <= roll)//16
 	 cout << " - Dining Room" << endl;
    }
 
-   else if(current_room == "peacock_start")
+   else if(current_room == "peacock_start" && roll >= 7)
    {
-      if(gs.getPeacock_start().access.adjacent1.distance <= roll)
+      if(gs.getPeacock_start().access.adjacent1.distance <= roll)//7
 	 cout << " - Lounge" << endl;
-      if(gs.getPeacock_start().access.adjacent2.distance <= roll)
+      if(gs.getPeacock_start().access.adjacent2.distance <= roll)//10
 	 cout << " - Hall" << endl;
-      if(gs.getPeacock_start().access.corner1.distance <= roll)
+      if(gs.getPeacock_start().access.corner1.distance <= roll)//9
 	 cout << " - Dining Room" << endl;
    }
 
-   else if(current_room == "plum_start")
+   else if(current_room == "plum_start" && roll >= 7)
    {
-      if(gs.getPlum_start().access.adjacent1.distance <= roll)
+      if(gs.getPlum_start().access.adjacent1.distance <= roll)//ll
 	 cout << " - Lounge" << endl;
-      if(gs.getPlum_start().access.adjacent2.distance <= roll)
+      if(gs.getPlum_start().access.adjacent2.distance <= roll)//8
 	 cout << " - Hall" << endl;
-      if(gs.getPlum_start().access.corner1.distance <= roll)
+      if(gs.getPlum_start().access.corner1.distance <= roll)//10
 	 cout << " - Dining Room" << endl;
    }
 
