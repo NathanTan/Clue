@@ -33,6 +33,8 @@ class player{
       bool execute_turn(game_state, int , bool* , int*, bool *);
       void print_turn_options(bool, bool);
       void move_character(int, bool, game_state);
+      card create_card(string, string);
+      card create_card(int, string, game_state);
 
       void print_available_rooms(int, game_state);
 

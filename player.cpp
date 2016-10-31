@@ -103,7 +103,7 @@ int player::roll_dice(){
 }
 
 
-//TODO: make sure incoming user chioce is valid and not an char
+//TODO: make sure incoming user choice is valid and not an char
 bool player::execute_turn(game_state gs, int user_choice, bool* dice_rolled, int* dice_roll, bool * player_moved ){
 
    cout << "Executing turn" << endl;
@@ -363,6 +363,10 @@ bool player::guess_confidential(game_state gs){
    cin >> room;
    cout << "Weapon: ";
    cin >> weapon;
+
+   create_card()
+
+
    //TODO check to see if inputs are valid
 
    check_guess(gs, room, weapon, suspect);
@@ -370,9 +374,34 @@ bool player::guess_confidential(game_state gs){
    return false;
 }
 
+//TODO: finish
 bool player::check_guess(game_state gs, int room, int weapon, int suspect){
 
+   for(int i=0; i < 3; i++){
+         if(true)
+         break;
+   }
+
    return false;
+}
+
+card player::create_card(string name, string type){
+      card new_card;
+      new_card.name = name;
+      new_card.type = type;
+      return new_card;
+}
+
+card player::create_card(int name, string type, game_state gs){
+      card new_card;
+      new_card.type = type;
+
+      if(type == "Suspect"){
+            
+      }
+      else if(type == "Room"){
+            if(name == gs.get_list_of_rooms()[0].name){}
+      }
 }
 
 string player::getCharacter(){

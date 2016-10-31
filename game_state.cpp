@@ -60,6 +60,15 @@ game_state::game_state(int n){
    deck[19].type = "Lead Pipe";
    deck[20].type = "Wrench";
 
+   for(int i = 0; i < 9; i++){
+         list_of_rooms[i] = deck[i].name;
+   }
+   for(int i = 0; i < 6; i++){
+         list_of_suspects[i] = deck[i + 9].name;
+   }
+   for(int i = 0; i < 6; i++){
+         list_of_weapson[i] = deck[i + 15].name;
+   }
 
 
 
@@ -283,6 +292,8 @@ ac game_state::getAdjacentRooms(string room){
    else{
       cout << "//////////////////////ERROR//////////////////" << endl;
    }
+
+return NULL;
 }
 
 room game_state::getStudy(){
@@ -332,7 +343,15 @@ room game_state::getPeacock_start(){
 room game_state::getPlum_start(){
    return plum_start;
 }
-
+string game_state::get_list_of_rooms(){
+   return list_of_rooms;
+}
+string game_state::get_list_of_suspects(){
+      return list_of_suspects;
+}
+string game_state::get_list_of_weapons(){
+      return list_of_weapson;
+}
 
 /*
    void game_state::printAllCards(){
