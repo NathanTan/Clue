@@ -67,7 +67,7 @@ game_state::game_state(int n){
          list_of_suspects[i] = deck[i + 9].name;
    }
    for(int i = 0; i < 6; i++){
-         list_of_weapson[i] = deck[i + 15].name;
+         list_of_weapons[i] = deck[i + 15].name;
    }
 
 
@@ -293,7 +293,7 @@ ac game_state::getAdjacentRooms(string room){
       cout << "//////////////////////ERROR//////////////////" << endl;
    }
 
-return NULL;
+//return NULL;
 }
 
 room game_state::getStudy(){
@@ -343,14 +343,23 @@ room game_state::getPeacock_start(){
 room game_state::getPlum_start(){
    return plum_start;
 }
-string game_state::get_list_of_rooms(){
+string * game_state::get_list_of_rooms(){
    return list_of_rooms;
 }
-string game_state::get_list_of_suspects(){
-      return list_of_suspects;
+string game_state::get_room(int pos){
+   return list_of_rooms[pos];
 }
-string game_state::get_list_of_weapons(){
-      return list_of_weapson;
+string * game_state::get_list_of_suspects(){
+   return list_of_suspects;
+}
+string game_state::get_suspect(int pos){
+   return list_of_suspects[pos];
+}
+string * game_state::get_list_of_weapons(){
+   return list_of_weapons;
+}
+string game_state::get_weapon(int pos){
+   return list_of_weapons[pos];
 }
 
 /*

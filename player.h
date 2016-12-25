@@ -2,6 +2,7 @@
 #include "card.h"
 #include "info.h"
 #include "game_state.h"
+#include <string>
 
 #pragma once
 //using namespace std;
@@ -33,13 +34,13 @@ class player{
       bool execute_turn(game_state, int , bool* , int*, bool *);
       void print_turn_options(bool, bool);
       void move_character(int, bool, game_state);
-      card create_card(string, string);
-      card create_card(int, string, game_state);
+      card * create_card(string, string);
+      card * create_card(int, string, game_state);
 
       void print_available_rooms(int, game_state);
 
       bool guess_confidential(game_state);
-      bool check_guess(game_state, int, int, int);
+      bool check_guess(game_state, string, string, string);
 
       string getCharacter();
       void setCharacter(string);

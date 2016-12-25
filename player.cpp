@@ -349,9 +349,9 @@ void player::print_available_rooms(int roll, game_state gs){
 bool player::guess_confidential(game_state gs){
 
    bool guess_is_correct = false;
-   int room = 0;
-   int weapon = 0;
-   int suspect = 0;
+   string room = 0;
+   string weapon = 0;
+   string suspect = 0;
    cout << "Guessing Confidential: " << endl;
    //print all cards
    //take in inputs as ints
@@ -364,7 +364,8 @@ bool player::guess_confidential(game_state gs){
    cout << "Weapon: ";
    cin >> weapon;
 
-   create_card()
+   //Instead of creating 3 card, just check against the card values
+   //create_card(room, weapon, suspect);
 
 
    //TODO check to see if inputs are valid
@@ -374,34 +375,56 @@ bool player::guess_confidential(game_state gs){
    return false;
 }
 
-//TODO: finish
-bool player::check_guess(game_state gs, int room, int weapon, int suspect){
-
-   for(int i=0; i < 3; i++){
-         if(true)
-         break;
+bool player::check_guess(game_state gs, string room, string weapon, string suspect){
+   if(gs.getConfidentialAt(0).name == room &&
+	 gs.getConfidentialAt(1).name == weapon &&
+	 gs.getConfidentialAt(2).name == suspect){
+      return true;
    }
-
    return false;
 }
 
-card player::create_card(string name, string type){
-      card new_card;
-      new_card.name = name;
-      new_card.type = type;
-      return new_card;
+card * player::create_card(string name, string type){
+   card new_card;
+   new_card.name = name;
+   new_card.type = type;
+   return new_card;
 }
 
-card player::create_card(int name, string type, game_state gs){
-      card new_card;
-      new_card.type = type;
+card * player::create_card(string name, string type, game_state gs){
+   card * new_card;
+   new_card.type = type;
 
-      if(type == "Suspect"){
-            
+   int i = 0;
+   if(type == "Suspect"){
+      while(true){
+	 if(name == gs.get_suspect(i)){
+	    new_card->name = name;
+	    new_card->type = type; 
+	 }
+	 i++;
       }
-      else if(type == "Room"){
-            if(name == gs.get_list_of_rooms()[0].name){}
+   }
+   else if(type == "Room"){
+      while(true){
+	 if(name == gs.get_room(i)){
+	    new_card->name = name;
+	    new_card->type = type; 
+	 }
+	 i++;
       }
+   }
+   else if(type == "Weapon"){
+      while(true){
+	 if(name == gs.get_weapon(i)){
+	    new_card->name = name;
+	    new_card->type = type; 
+	 }
+	 i++;
+      }
+   }
+
+   return new_card;
 }
 
 string player::getCharacter(){

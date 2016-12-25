@@ -17,7 +17,7 @@ class game_state{
 
       string list_of_rooms[9];
       string list_of_suspects[6];
-      string list_of_weapson[6];
+      string list_of_weapons[6];
 
       card deck[21];
       card confidential[3];
@@ -78,10 +78,13 @@ class game_state{
       room getPeacock_start();
       room getPlum_start();
 
-      string get_list_of_rooms();
-      string get_list_of_suspects();
-      string get_list_of_weapons();
-
+      string * get_list_of_rooms();
+      string get_room(int);
+      string * get_list_of_suspects();
+      string get_suspect(int);
+      string * get_list_of_weapons();
+      string get_weapon(int);
+      
       void print_availble_rooms(int, game_state);
 
 
